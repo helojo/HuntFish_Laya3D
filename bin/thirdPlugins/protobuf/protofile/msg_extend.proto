@@ -1,0 +1,35 @@
+package ExtendMsg;
+
+import "msg_role.proto";
+import "msg_common.proto";
+
+// 登录相关
+enum c_cmd {
+    extend_box_req = 0;
+    extend_box_resp = 1;
+    furious_fish_resp = 2;
+}
+
+service msg_extend_service {
+    rpc extend_box (extend_box_req) returns (extend_box_resp); //幸运宝箱消息返回
+    rpc extend_furious (undefined) returns (furious_fish_resp); //狂暴河豚消息返回
+}
+
+message extend_box_req {
+}
+
+message extend_box_resp {
+    required uint64 uid = 1;
+    required uint32 score = 2; // 进度条积
+    required uint32 hit_num = 3; // 进度条总额
+    optional uint64 chips = 4;
+    optional uint64 show_chips = 5;
+}
+
+// 狂暴河豚升级
+message furious_fish_resp {
+    required uint32 type = 1; // 鱼的类型
+    required uint64 id = 2; // 鱼的ID
+    required uint32 level = 3; //　鱼等级
+    required uint32 fish_rate = 4; //鱼倍率
+}

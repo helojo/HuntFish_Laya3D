@@ -1,0 +1,32 @@
+stages:
+  - deploy-pdev
+
+before_script:
+  - git config --global core.longpaths true
+  - $SSH_URL=echo $CI_REPOSITORY_URL | perl -pe 's#.*@(.+?(\:\d+)?)/#ssh://git@\1:#'|sed 's#com:#com:8888/#'
+
+deploy:
+  stage: deploy-pdev
+
+#  variables:
+#    CI_DEBUG_TRACE: "true"
+
+
+  only:
+    - deploy-pdev
+  script:
+    - gulp ci
+    - $SSH_URL
+#    - git config --global user.name "$env:GITLAB_USER_ID"
+#    - git config --global user.email "$env:GITLAB_USER_EMAIL"
+#    - git checkout master
+#    - git pull
+#    - git add .\bin\.
+#    - git commit -m "[ci skip]auto add bin\* with job $env:CI_JOB_ID"
+#    - git push $SSH_URL
+    - $DIR=C:\cygwin64\bin\ls.exe dist; $DIR
+    - ssh root@192.168.200.46 "! [[ $(dirname /data/www/fg/gamelist/public/global/list/fish/) == $(dirname /data/www/fg/gamelist/public/global/list/fish/$DIR/) ]] && rm -rf /data/www/fg/gamelist/public/global/list/fish/$DIR || exit 1"
+    - scp -r dist/$DIR root@192.168.200.46:/data/www/fg/gamelist/public/global/list/fish/
+    - ssh root@192.168.200.46 "chmod -R 775 /data/www/fg/gamelist/public/global/list/fish/$DIR && ls /data/www/fg/gamelist/public/global/list/fish/"
+  tags:
+    - windows

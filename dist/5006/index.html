@@ -1,0 +1,107 @@
+<html>
+
+<head>
+    <title>捕鱼来了3D</title>
+    <meta charset='utf-8' />
+    <meta name='renderer' content='webkit' />
+    <meta name='viewport' content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no' />
+    <meta id="gameVersion" value="1.5.190127.69">
+    <meta name='apple-mobile-web-app-capable' content='yes' />
+    <meta name='full-screen' content='true' />
+    <meta name='x5-fullscreen' content='true' />
+    <meta name='360-fullscreen' content='true' />
+    <meta name='laya' screenorientation='landscape' />
+    <meta http-equiv='expires' content='0' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' />
+    <meta http-equiv='expires' content='0' />
+    <meta http-equiv='Cache-Control' content='no-siteapp' />
+</head>
+
+<body>
+    <div id="splash" style="text-align: center; position: fixed;z-index: 99;bottom: 0px;left: 0px;width: 100%;height: 100%;">
+        <div id="logo-container" style="position: relative;height:100%;width: 100%;">
+            <div id="logo-landscape" style="position: relative;display:none;">
+                <img id="splashLogo-landscape" width="1136" height="640">
+            </div>
+            <div id="logo-portrait" style="position: relative;display:none;bottom:10%;">
+                <img id="splashLogo-portrait" width="640" height="1136">
+            </div>
+            <div id="version-label" style="color: #FFFFFF;font-size: 18px;position:absolute;text-shadow: rgb(0, 0, 0) 1.3px 0px 0px, rgb(0, 0, 0) 0px 1.3px 0px, rgb(0, 0, 0) -1.3px 0px 0px, rgb(0, 0, 0) 0px -1.3px 0px;bottom: 20px;right: 10px;">V0</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var indexFile = "index.js";
+        var g_libLoadfinished = 0; //加载完成的数目
+        var g_libLoadCount = 0; //加载库的总共数目
+        function loadLibFinfish() {
+            g_libLoadfinished++;
+            if (g_libLoadCount >= g_libLoadfinished) {
+                if (UpdatePorgress) {
+                    UpdatePorgress.updateShow(g_libLoadfinished / g_libLoadCount);
+                }
+            }
+        }
+
+        function loadLib(url) {
+            var script = document.createElement("script");
+            script.async = false;
+            script.src = url;
+            g_libLoadCount++;
+            document.body.appendChild(script);
+            script.onload = function () {
+                loadLibFinfish();
+            }
+        }
+
+        var g_RemoveSplash = function () {
+            var splash = document.getElementById('splash');
+            splash.style.display = 'none';
+            splash.parentNode.removeChild(splash);
+
+
+            //滑动全屏动画
+            var slideFullScreen = document.createElement('script');
+            slideFullScreen.async = true;
+            slideFullScreen.src = '../fish_common/fullScreen/layaFunllScreen.js' + '?v=' + comVersion;
+            document.body.appendChild(slideFullScreen);
+        };
+
+        function StartLoad() {
+            var verConfig = document.createElement('script');
+            verConfig.async = true;
+            verConfig.src = "../fish_common/verConfig.js?v=" + (new Date()).getTime();
+            var configLoaded = function () {
+                console.log("加载公共库版本号: " + comVersion);
+
+                var base64js = document.createElement('script');
+                base64js.async = false;
+                base64js.src = "../fish_common/progress/Base64Util.js?v=" + comVersion;
+                document.body.appendChild(base64js);
+
+                var aniFrameJs = document.createElement('script');
+                aniFrameJs.async = false;
+                aniFrameJs.src = "../fish_common/progress/AnimateFrame.js?v=" + comVersion;
+                document.body.appendChild(aniFrameJs);
+
+
+                var ProgressConfigJs = document.createElement('script');
+                ProgressConfigJs.async = false;
+                ProgressConfigJs.src = "../fish_common/progress/ProgressConfig.js?v=" + comVersion;
+                document.body.appendChild(ProgressConfigJs);
+
+                var ProgressMainJs = document.createElement('script');
+                ProgressMainJs.async = false;
+                ProgressMainJs.src = "../fish_common/progress/ProgressMain.js?v=" + comVersion;
+                document.body.appendChild(ProgressMainJs);
+
+            };
+            verConfig.onload = function () {
+                configLoaded();
+            }
+            document.body.appendChild(verConfig);
+        }
+        StartLoad();
+    </script>
+</body>
+
+</html>

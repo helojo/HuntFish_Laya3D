@@ -1,0 +1,103 @@
+package LoginMsg;
+
+import "msg_role.proto";
+import "msg_common.proto";
+
+// 登录相关
+enum c_cmd {
+    login_req = 0;
+    login_resp = 1;
+    time_req = 3;
+    time_resp = 4;
+    login_account_req = 5;
+    kictout_resp = 6;
+    update_token_resp = 7;
+    switch_resp = 8;
+}
+
+service msg_login_service {
+    rpc login (login_req) returns (login_resp);
+    rpc time (time_req) returns (time_resp);
+    rpc login_account (login_account_req) returns (login_resp);
+    rpc kictout (undefined) returns (kictout_resp);
+    rpc update_token (undefined) returns (update_token_resp);
+    rpc switch (undefined) returns (switch_resp);
+}
+
+enum login_mode_code {
+    normal = 1; // 普通登陆
+    reconnect = 2; // 重连登陆
+}
+
+enum login_code {
+    SUCCESS = 1; // 成功
+    FAIL = 2; // 失败
+    ERR_ACCOUNT = 3; // 错误账号
+    TOKEN_TIMEOUT = 4; // token过期
+    TOKEN_ERROR = 5; // token错误
+    OTHER_LOGIN = 6; // 异地登陆
+    FORCE_KICTOUT = 7; // 强制踢下线
+    MAINTAIN_KICTOUT = 8; // 维护踢下线
+}
+
+message login_req {
+    required login_mode_code code = 1;
+    required string token = 2;
+    required string lang = 3;
+}
+
+message fish_config {
+    required uint32 fish_type = 1; //鱼类型
+    required uint32 fish_class = 2; //鱼种类 鱼类别 非一网打尽
+    required uint32 fish_speed = 3; //速度
+    required uint32 fish_rate = 4;  //奖励比率
+    optional bool   is_warning = 5; //是否预警
+}
+
+message login_resp {
+    required login_code code = 1;
+    optional role_info role = 2;
+    optional role_reconnect reconnect = 3;
+    repeated login_room_info room_info = 4;
+    repeated fish_config fish_info = 5;
+    optional string jwt_token = 6;
+    optional bytes wave_info = 7; //鱼阵配置
+    optional string err_msg = 8; // 错误提示
+}
+
+message switch_info {
+    required uint32 type = 1; //功能类型 1买鱼 2等级基金
+    required bool is_on = 2; //是否开启
+}
+
+message switch_resp {
+    repeated switch_info switch = 1;
+}
+
+message login_account_req {
+    required string account = 1;
+    required string token = 2;
+    required string lang = 3;
+}
+
+message time_req {
+}
+message time_resp {
+    required uint64 time = 1; // 时间戳(毫秒)
+}
+
+message kictout_resp {
+    required login_code code = 1;
+    optional string err_msg = 2; // 错误提示
+}
+
+message login_room_info {
+    required uint32 room_type = 1;
+    required uint32 ante = 2;
+    required uint64 lowest = 3;
+    repeated uint32 battery = 4;
+}
+
+message update_token_resp {
+    optional string jwt_token = 1;
+}

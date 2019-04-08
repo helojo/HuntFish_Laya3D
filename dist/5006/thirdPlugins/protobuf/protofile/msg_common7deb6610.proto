@@ -1,0 +1,28 @@
+package CommonMsg;
+
+message undefined {
+}
+
+enum room_type {
+    room_auto = 0; // 自动选择
+    room_normal = 1;
+    room_middle = 2;
+    room_senior = 3;
+    room_superfine = 4;
+    room_godly = 5;
+    room_race = 100;
+    room_nation_race = 101;
+}
+
+message dmsg_content{
+    required string msg_type = 1; // "chars" / "number" / Other(eg:"fish_name")
+    optional string chars = 2;
+    optional uint64 number = 3;
+    optional uint32 id = 4;
+}
+
+// 消息
+message dmsg {
+    required uint32 id = 1; // id
+    repeated dmsg_content content = 2; // 内容
+}

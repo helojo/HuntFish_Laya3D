@@ -1,0 +1,1 @@
+{"type":"Scene","props":{"width":1280,"height":720},"compId":2,"child":[{"type":"Image","props":{"y":231,"x":444.5,"skin":"LayaRes/game/25.png"},"compId":3},{"type":"FontClip","props":{"y":487,"x":550,"value":"0123456789","skin":"LayaRes/Font/3djnh_jb.png","sheet":"0123456789"},"compId":4}],"loadList":["LayaRes/game/25.png","LayaRes/Font/3djnh_jb.png"],"loadList3D":[]}

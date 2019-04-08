@@ -1,0 +1,5 @@
+<res>
+   <item name="unityRes" type="" compress="0" pack="2" quality="80" props="" picType="0" scale="0"/>
+   <item name="fairyguiRes" type="" compress="0" pack="2" quality="80" props="" picType="0" scale="0"/>
+   <item name="fairyguiRes/fui/game/point.png" type="Sprite" compress="0" pack="0" quality="80" props="" picType="1" scale="0"/>
+</res>

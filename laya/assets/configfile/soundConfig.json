@@ -1,0 +1,194 @@
+[
+  {
+    "fishid": 1,
+    "fishname": "小黄鱼",
+    "soundid": "FishDying18",
+    "column3": null
+  },
+  {
+    "fishid": 2,
+    "fishname": "小鳊鱼",
+    "soundid": "FishDying18",
+    "column3": null
+  },
+  {
+    "fishid": 3,
+    "fishname": "黄骨鱼",
+    "soundid": "FishDying19",
+    "column3": null
+  },
+  {
+    "fishid": 4,
+    "fishname": "青鱼",
+    "soundid": "FishDying19",
+    "column3": null
+  },
+  {
+    "fishid": 5,
+    "fishname": "蓝鱼",
+    "soundid": "FishDying19",
+    "column3": null
+  },
+  {
+    "fishid": 6,
+    "fishname": "神仙鱼",
+    "soundid": "FishDying19",
+    "column3": null
+  },
+  {
+    "fishid": 7,
+    "fishname": "红杉鱼",
+    "soundid": "FishDying20",
+    "column3": null
+  },
+  {
+    "fishid": 8,
+    "fishname": "青鲤鱼",
+    "soundid": "FishDying20",
+    "column3": null
+  },
+  {
+    "fishid": 9,
+    "fishname": "黄鲶鱼",
+    "soundid": "FishDying1",
+    "column3": null
+  },
+  {
+    "fishid": 10,
+    "fishname": "蓝鲶鱼",
+    "soundid": "FishDying2",
+    "column3": null
+  },
+  {
+    "fishid": 11,
+    "fishname": "绿河豚",
+    "soundid": "FishDying3",
+    "column3": null
+  },
+  {
+    "fishid": 12,
+    "fishname": "蓝河豚",
+    "soundid": "FishDying4",
+    "column3": null
+  },
+  {
+    "fishid": 13,
+    "fishname": "变种鱼",
+    "soundid": "FishDying5",
+    "column3": null
+  },
+  {
+    "fishid": 14,
+    "fishname": "灯笼鱼",
+    "soundid": "FishDying6",
+    "column3": null
+  },
+  {
+    "fishid": 15,
+    "fishname": "海龟",
+    "soundid": "FishDying17",
+    "column3": null
+  },
+  {
+    "fishid": 16,
+    "fishname": "电鳗",
+    "soundid": "FishDying8",
+    "column3": null
+  },
+  {
+    "fishid": 17,
+    "fishname": "尖嘴鲨",
+    "soundid": "FishDying9",
+    "column3": null
+  },
+  {
+    "fishid": 18,
+    "fishname": "鲽鱼",
+    "soundid": "FishDying10",
+    "column3": null
+  },
+  {
+    "fishid": 19,
+    "fishname": "蝙蝠鱼",
+    "soundid": "FishDying11",
+    "column3": null
+  },
+  {
+    "fishid": 20,
+    "fishname": "蓝鲨鱼",
+    "soundid": "FishDying12",
+    "column3": null
+  },
+  {
+    "fishid": 21,
+    "fishname": "南极海豚",
+    "soundid": "FishDying13",
+    "column3": null
+  },
+  {
+    "fishid": 22,
+    "fishname": "长嘴鳄",
+    "soundid": "FishDying14",
+    "column3": null
+  },
+  {
+    "fishid": 23,
+    "fishname": "黄金鲨鱼",
+    "soundid": "FishDying15",
+    "column3": null
+  },
+  {
+    "fishid": 24,
+    "fishname": "深海金龙",
+    "soundid": "FishDying16",
+    "column3": null
+  },
+  {
+    "fishid": 25,
+    "fishname": "蓝魅美人鱼",
+    "soundid": "FishDying7",
+    "column3": null
+  },
+  {
+    "fishid": 26,
+    "fishname": "海盗船",
+    "soundid": "FishDying26",
+    "column3": null
+  },
+  {
+    "fishid": 27,
+    "fishname": "鱼王1",
+    "soundid": "FishDying28",
+    "column3": null
+  },
+  {
+    "fishid": 28,
+    "fishname": "鱼王2",
+    "soundid": "FishDying28",
+    "column3": null
+  },
+  {
+    "fishid": 29,
+    "fishname": "鱼王3",
+    "soundid": "FishDying28",
+    "column3": null
+  },
+  {
+    "fishid": 30,
+    "fishname": "鱼王4",
+    "soundid": "FishDying28",
+    "column3": null
+  },
+  {
+    "fishid": 31,
+    "fishname": "鱼王5",
+    "soundid": "FishDying28",
+    "column3": null
+  },
+  {
+    "fishid": 32,
+    "fishname": "全屏炸弹",
+    "soundid": "FishDying32",
+    "column3": null
+  }
+]

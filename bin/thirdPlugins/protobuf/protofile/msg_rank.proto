@@ -1,0 +1,64 @@
+package RankMsg;
+
+// 排行榜
+enum c_cmd {
+    rank_req = 0;
+    rank_total_req = 1;
+    rank_resp = 2;
+}
+
+enum rank_type {
+    rank_last_week = 1; // 上周排行
+    rank_this_week = 2; // 本周排行
+    rank_act = 3;       // 活动排行
+}
+
+service msg_rank_service {
+    rpc rank (rank_req) returns (rank_resp);
+    rpc rank_total (rank_total_req) returns (rank_resp);
+}
+
+// 获奖信息
+message rank_info {
+    required string nickname = 1; // 昵称
+    required uint64 score = 2; // 金币
+    optional uint64 chips = 3; // 奖励金
+    optional uint32 rank = 4; // 排名(非连续排名的需要指明排名)
+}
+
+enum act_rank_type {
+    main_list = 1; // 主榜单
+    daily_list = 2; // 每日榜单
+    race_list = 3; // 活动下赛事榜单
+}
+
+// 活动id
+message act_id {
+    required uint64 act_uid = 1; // 活动唯一id
+    required act_rank_type type = 2; // 榜单类型
+    optional uint64 act_race_uid = 3; // 活动赛事唯一id
+}
+
+message rank_req {
+    required uint32 index = 1; // 索引第几页
+    required rank_type type = 2;
+    optional act_id uid = 3; // 活动id
+}
+
+message rank_total_req {
+    required rank_type type = 1;
+    optional act_id uid = 2; // 活动id
+}
+
+message rank_resp {
+    repeated rank_info role = 1;
+    required uint32 self_rank = 2;
+    optional uint64 score = 3;      // 本周盈利筹码
+    optional uint64 last_score = 4; //上周盈利筹码
+    optional act_role_info role_act = 5;
+}
+
+message act_role_info {
+    required uint64 self_score = 1; // 排行值
+    required uint64 self_reward = 2; // 累计奖励金
+}

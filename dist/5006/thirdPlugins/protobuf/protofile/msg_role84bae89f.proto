@@ -1,0 +1,39 @@
+package RoleMsg;
+
+import "msg_common.proto";
+
+enum msg_role_code {
+    ROLE_CODE_SUCCESS = 1;
+    ROLE_CODE_FAIL = 2;
+}
+
+enum msg_relogin_code {
+    RELOGIN_NORMAL = 1;
+    RELOGIN_RECONNECT = 2;
+}
+
+// 角色信息
+message role_info {
+    required int64 agent_id = 1; // 代理id
+    required int64 owner_id = 2; // 包网商id
+    required string account = 3; // 账户id
+    required uint64 jetton = 4; // 实际筹码数
+    required uint32 level = 5; // 玩家等级
+    required string nickname = 6; // 玩家昵称
+    required uint64 roleId = 7; // 玩家id
+    required uint64 jetton_show = 8; // 显示筹码数
+    optional bool is_new = 9; //是否第一次登录
+    optional uint64 main_wallet = 10; //是否免转
+    optional uint64 auto_wallet = 11; //自动额度
+    optional uint32 left_race_price = 12; //大奖赛未领奖个数
+    optional bool is_wallet = 13; //是否免转(3d)
+    optional uint64 exp = 14; //玩家等级经验值
+    optional uint64 need_exp = 15; //当前等级提升需要的总经验值
+    optional uint64 top_agent_id = 16; // 总社id
+}
+
+message role_reconnect {
+    required msg_relogin_code code = 1; // 重连标记
+    required room_type roomtype = 2; //房间类型
+    optional uint32 raceid = 3;     // 比赛id
+}

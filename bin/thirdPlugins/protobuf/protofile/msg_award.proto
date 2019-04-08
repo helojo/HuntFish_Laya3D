@@ -1,0 +1,126 @@
+package AwardMsg;
+
+import "msg_common.proto";
+
+// 奖励相关
+enum c_cmd {
+    growth_fund_info_req = 0;
+    growth_fund_info_resp = 1;
+    growth_fund_config_req = 2;
+    growth_fund_config_resp = 3;
+    growth_fund_buy_req = 4;
+    growth_fund_buy_resp = 5;
+    lv_award_req = 6;
+    lv_award_resp = 7;
+    lv_award_notice_resp = 8;
+    lv_award_notice_set_req = 9;
+    growth_fund_state_req = 10;
+    growth_fund_state_resp = 11;
+    lv_award_state_req = 12;
+    lv_award_state_resp = 13;
+}
+
+service msg_award_service {
+    // 成长基金信息
+    rpc growth_fund_info (growth_fund_info_req) returns (growth_fund_info_resp);
+    // 成长基金配置
+    rpc growth_fund_configs (growth_fund_config_req) returns (growth_fund_config_resp);
+    // 购买成长基金(平台实现)
+    rpc growth_fund_buy (growth_fund_buy_req) returns (growth_fund_buy_resp);
+    // 领取等级奖励(平台实现)
+    rpc lv_award (lv_award_req) returns (lv_award_resp);
+    // 等级奖励提示
+    rpc lv_award_notice (undefined) returns (lv_award_notice_resp);
+    // 等级奖励提示设置
+    rpc lv_award_notice_set (lv_award_notice_set_req) returns (undefined);
+    // 成长基金状态
+    rpc growth_fund_state (growth_fund_state_req) returns (growth_fund_state_resp);
+    // 等级奖励状态
+    rpc lv_award_state (lv_award_state_req) returns (lv_award_state_resp);
+}
+
+enum award_code {
+    success = 0;        // 成功
+    fail = 1;           // 失败
+    out_of_cash = 2;    // 金币不足
+    top_fun_id = 3;     // 当前已是最高档次基金
+    lv_had_reward = 4;  // 等级奖励已领取
+    levelnot = 5;       // 等级奖励未满足领取条件
+    prev_reward = 6;    // 前置奖励未领取
+    had_bought = 7;     // 档次基金已购买
+    act_end = 8;        // 活动已结束
+}
+
+// 成长基金信息
+message growth_fund_info_req {
+}
+
+message growth_fund_info_resp {
+    required uint32 fund_id = 1;    // 购买的基金档次
+}
+
+// 成长基金配置
+message growth_fund_config_req {
+}
+
+message growth_fund_config_resp {
+    repeated growth_fund_config configs = 1;    // 基金配置列表
+}
+
+message growth_fund_config {
+    required uint32 fund_id = 1;    // 基金档次(id值从高到低对应档次从高到低，1为最低档次基金)
+    required uint64 price = 2;      // 基金价格
+    required uint64 rebate = 3;     // 基金返利
+    required uint32 rebate_per = 4; // 基金返利比百分值(最小值1)，例如：1表示100%
+    required string des = 5;        // 描述
+}
+
+// 购买成长基金
+message growth_fund_buy_req {
+    required uint32 fund_id = 1;
+}
+
+message growth_fund_buy_resp {
+    required award_code code = 1;   // 操作结果
+    required uint32 fund_id = 2;    // 最新的基金档次(不管成功失败都需要更新)
+}
+
+// 领取等级奖励
+message lv_award_req {
+    required uint32 lv = 1;         // 要领取奖励的等级
+}
+
+message lv_award_resp {
+    required award_code code = 1;   // 操作结果
+    required uint32 lv = 2;         // 最新的领取奖励的等级(不管成功失败都需要更新)
+    required uint32 next_lv = 3;    // 已领取等级下一可领取等级
+    required uint64 reward = 4;     // 已领取等级下一可领取奖励(0表示没有下一奖励)
+}
+
+// 等级奖励通知(仅有奖励可领取并且当前基金不是最高档次基金时，才推送协议)
+message lv_award_notice_resp {
+    required uint64 award = 1;      // 当前可领取奖励
+    required uint64 max_award = 2;  // 购买最高基金档次后可领取最大奖励
+}
+
+// 等级奖励通知设置
+message lv_award_notice_set_req {
+    required bool not_today = 1;    // 当天是否继续通知
+}
+
+// 成长基金状态
+message growth_fund_state_req {
+}
+
+message growth_fund_state_resp {
+    required uint32 mark = 1;       // 状态(0不可购买1可购买)
+    required uint64 end_time = 2;   // 活动结束时间戳(秒)
+}
+
+// 等级奖励状态
+message lv_award_state_req {
+}
+
+message lv_award_state_resp {
+    required uint32 mark = 1;       // 状态(0不可领取1可领取)
+}

@@ -1,0 +1,435 @@
+package RoomMsg;
+
+// 房间相关,包括战斗消息和获奖消息
+import "msg_role.proto";
+import "msg_common.proto";
+
+enum c_cmd {
+    enter_room_req = 0;
+    enter_room_resp = 1;
+    ready_room_req = 2;
+    ready_room_resp = 3;
+    syn_seat_req = 4;
+    syn_fish_resp = 5;
+    hit_fish_req = 6;
+    hit_fish_resp = 7;
+    shoot_bullet_req = 8;
+    shoot_bullet_resp = 9;
+    change_battery_req = 10;
+    change_battery_resp = 11;
+    leave_room_req = 12;
+    update_fish_resp = 13;
+    fish_dead_resp = 14;
+    leave_room_resp = 15;
+    update_chips_resp = 16;
+    shoot_err_resp = 17;
+    battery_err_resp = 18;
+    sync_chips_rep = 19;
+    sync_chips_resp = 20;
+    room_status_resp = 21;
+    syn_role_resp = 22;
+    novice_prompt_req = 23;
+    bullet_useless_req = 24;
+    bullet_useless_resp = 25;
+    bullet_pass_resp = 26;
+    sync_jp_jetton_resp = 27;
+    fish_matrix_resp = 28;
+    clean_wave_resp = 29;
+    one_piece_resp = 30;
+    hit_result_resp = 31;
+    extra_reward_req = 32;
+    extra_reward_resp = 33;
+    wave_matrix_resp = 34;
+    mq_sync_chips_resp = 35;
+    fish_select_save_req = 36;
+    fish_select_save_resp = 37;
+    fish_select_req = 38;
+    fish_select_resp = 39;
+    update_valentine_score = 40;
+    rotate_canvas_resp = 41;
+    weapon_chip_resp = 42;
+}
+
+enum msg_room_code {
+    SUCCESS_ENTER = 1;
+    FALSE_ENTER = 2;
+    ERR_BARBETTE = 3; //炮台不符合规则
+    ERR_CHIPS = 4; //击中鱼请求子弹价值超余额
+    LOW_CHIPS = 5; //筹码低于下限(或者比赛筹码无法报名）
+    HIGH_CHIPS = 6; //筹码超限
+    UNFROZEN = 7; //正常状态
+    RELOGIN_NORMAL = 8; //正常重登
+    RELOGIN_RECONNECT = 9; //重新连接
+    ERR_HIT_REQ = 10; //错误的打鱼请求
+    ERR_SUMMON_ROLE = 11; //召唤人不存在
+    ERR_SUMMON = 12; //召唤失败
+    FROZEN = 13; //冰冻状态
+    RACE_OUT_TIME = 14; //比赛超时
+    TOO_MUCH_TRY = 15; //比赛次数超限
+    LOCK_CHARID = 16; //形象未解锁
+}
+
+enum msg_fish_save_code {
+    SUCCESS = 1;
+    FALSE = 2;
+}
+
+enum msg_special_code {
+    NOEMAL = 0;
+    ALTAIR = 1; //牛郎星
+    VEGA = 2;  // 织女星
+    AWARD = 3; // 奖金鱼
+}
+
+service msg_room_service {
+    rpc enter_room (enter_room_req) returns (enter_room_resp); //进入房间
+    rpc ready_room (ready_room_req) returns (undefined); //同步房间玩家信息 请求
+    rpc other_ready_room (undefined) returns (ready_room_resp); //同步房间玩家信息 返回
+    rpc syn_seat (syn_seat_req) returns (undefined); //同步座位信息完成
+    rpc syn_fish (undefined) returns (syn_fish_resp); //同步鱼信息 返回
+    rpc hit_fish (hit_fish_req) returns (undefined); //子弹击中鱼 请求
+    rpc other_hit_fish (undefined) returns (hit_fish_resp); //子弹击中鱼 返回
+    rpc fish_dead (undefined) returns (fish_dead_resp); //鱼死亡
+    rpc create_fish (undefined) returns (update_fish_resp); //生成鱼     返回
+    rpc shoot_bullet (shoot_bullet_req) returns (undefined); //发射子弹
+    rpc sync_bullet (undefined) returns (shoot_bullet_resp); //同步子弹
+    rpc change_battery (change_battery_req) returns (undefined); //更换炮台
+    rpc change_battery_resp (undefined) returns (change_battery_resp); //更换炮台 返回
+    rpc leave_room (leave_room_req) returns (undefined); //离开房间
+    rpc leave_room_resp (undefined) returns (leave_room_resp); //离开房间 返回
+    rpc update_chips (undefined) returns (update_chips_resp); //增加筹码
+    rpc shoot_err (undefined) returns (shoot_err_resp); //发射子弹报错返回
+    rpc battery_err (undefined) returns (battery_err_resp); //切换炮台报错返回
+    rpc sync_chips (sync_chips_rep) returns (sync_chips_resp); //同步筹码
+    rpc mq_sync_chips(undefined) returns (mq_sync_chips_resp); //mq同步筹码
+    rpc room_status (undefined) returns (room_status_resp); //房间状态 返回
+    rpc syn_role (undefined) returns (syn_role_resp); //再次同步座位信息 返回
+    rpc novice_prompt (novice_prompt_req) returns (undefined); //完成新手提示
+    rpc sync_useless_bullet (bullet_useless_req) returns (undefined); //同步无用子弹请求
+    rpc sync_useless_bullet_resp (undefined) returns (bullet_useless_resp); //同步无用子弹返回
+    rpc pass_bullet_resp (undefined) returns (bullet_pass_resp); //pass子弹返回
+    rpc jp_jetton_resp (undefined) returns (sync_jp_jetton_resp); //中奖后同步显示筹码
+    rpc fish_matrix (undefined) returns (fish_matrix_resp); //鱼阵返回
+    rpc fish_wave_matrix (undefined) returns (wave_matrix_resp); //鱼阵返回 3d新增
+    rpc clean_wave (undefined) returns (clean_wave_resp); //清屏波浪
+    rpc hit_result (undefined) returns (hit_result_resp); //鱼被击中伤害信息返回
+    rpc extra_reward (extra_reward_req) returns (extra_reward_resp); //额外奖励信息返回
+    rpc save_fish_set (fish_select_save_req) returns (fish_select_save_resp); // 保存默认打鱼设置
+    rpc get_fish_set (fish_select_req) returns (fish_select_resp); // 获取默认打鱼设置
+    rpc valentine_score (undefined) returns (update_valentine_score); //七夕情人节分数
+    rpc rotate_canvas_broadcast (undefined) returns (rotate_canvas_resp); //广播旋转屏幕
+    rpc weapon_chip (undefined) returns (weapon_chip_resp); // 武器最终奖金返回
+}
+
+// 进入房间
+message enter_room_req {
+    required room_type type = 1;
+    required msg_relogin_code code = 2;
+    optional uint32 race_id = 3; // 比赛id
+    optional uint64 uid = 4; // 活动id
+    optional int32 select_role = 5;    // 选角色
+}
+
+message enter_room_resp {
+    required msg_room_code code = 1;
+    optional uint32 game_id = 2; // 游戏id 1-美人捕鱼 以此类推
+}
+
+// 客户端初始化房间模块完成,请求角色信息初始化座位
+message ready_room_req {
+}
+
+message ready_room_resp {
+    repeated room_role_info role = 1; //房间其他用户信息
+}
+
+// 客户端初始化座位完成,再次同步玩家信息
+message syn_role_resp {
+    repeated room_role_info role = 1; //房间其他用户信息
+}
+
+// 客户端初始化座位完成,请求开始正常通信
+message syn_seat_req {
+}
+
+message room_status_resp {
+    required msg_room_code status = 1; //房间状态信息
+    repeated update_fish_resp fish_list = 2; //鱼列表
+    optional uint64 matrix_fztime_ms = 3; // 鱼阵的冰冻时间
+}
+// 开始更新鱼
+message syn_fish_resp {
+    repeated update_fish_resp fish_list = 1; //更新同步鱼
+}
+
+// 更新鱼
+message update_fish_resp {
+    required uint32 type = 1; // 鱼的类型
+    required uint64 id = 2; // 鱼的ID
+    required uint32 path_id = 3; // 鱼的路线
+    optional uint64 create_time_ms = 4; // 鱼的生成时间
+    optional uint64 frozen_time_ms = 5; // 鱼的冰冻时间
+    optional uint32 hp = 6; // 血量
+    optional uint32 pos = 7; //位置
+    optional uint32 model = 8; //规格
+    optional uint64 owner_id = 9; // 所属玩家id
+    optional msg_special_code code = 10;
+    optional uint32 level = 11; //　鱼等级
+}
+
+// 子弹击中鱼
+message hit_fish_req {
+    required uint32 bullet_multi = 1; // 子弹倍数
+    repeated uint64 fish_id = 2; // 鱼ID
+    repeated uint64 related_fish = 3; // 被关联的鱼
+    required uint64 bulletid = 4; // 子弹id
+    optional uint32 weapon_type = 5; //武器类型
+}
+
+message related_fish {
+    required uint64 fish_id = 1; // 鱼ID
+    repeated uint64 fish = 2; // 被关联的鱼
+}
+
+message hit_fish_resp {
+    required msg_room_code code = 1;
+}
+
+//收获奖金返回
+message weapon_chip_resp {
+    required uint64 uid = 1;                    // who
+    required uint32 weapon_type = 2;            // 武器类型
+    required uint64 bulletid = 3; // 子弹id
+    required uint64 jettonshow = 4;             // 显示的筹码
+    repeated fish_bonus_info dead_fish  = 5; // 奖金信息
+    repeated fish_bonus_info dead_no_fish  = 6; // 奖金信息
+}
+
+// 鱼死亡
+message fish_dead_resp {
+    required uint64 uid = 1; // 谁打死鱼
+    repeated fish_bonus_info fish_killed = 2; // 被杀死鱼的奖金信息
+    required uint64 bulletid = 3; // 子弹id
+    required uint64 jettonshow = 4; // 显示的筹码
+    optional uint32 bulletleft = 5; //子弹剩余
+}
+
+// 发射子弹
+message shoot_bullet_req {
+    required uint64 uid = 1;
+    required uint32 multi = 2; // 子弹倍数,和类型一起确定子弹显示形态
+    required float angel = 3; // 角度
+    required uint64 time = 4; //子弹开始时间
+    required uint64 fishid = 5; //鱼ID
+    required uint64 bulletid = 6; // 子弹id
+}
+
+message shoot_bullet_resp {
+    required uint64 uid = 1;
+    required uint32 multi = 2; // 子弹倍数,和类型一起确定子弹显示形态
+    required float angel = 3; // 角度
+    required uint64 time = 4; //子弹开始时间
+    required uint64 fishid = 5; //鱼ID
+    required uint64 bulletid = 6; // 子弹id
+    required uint64 jettonshow = 7; // 显示的筹码
+    optional uint32 bulletleft = 8; //子弹剩余
+}
+
+// 改变炮台倍数
+message change_battery_req {
+    required uint32 multi = 1;
+}
+
+message change_battery_resp {
+    required uint64 uid = 1; //用户id
+    required uint32 multi = 2; //炮台倍数
+}
+
+//离开房间
+message leave_room_req {
+}
+
+message leave_room_resp {
+    required uint64 uid = 1; // 用户id
+}
+
+
+message room_role_info {
+    required uint64 uid = 1;
+    required uint32 position = 2; // 玩家位置
+    required string nickname = 3; // 用户昵称
+    required uint64 jetton = 4; // 实际筹码数
+    required uint32 bullet_multi = 5; // 子弹初始倍数
+    required uint32 level = 6; // 级数
+    required uint64 summon_time = 7; //召唤鱼时间
+    required uint64 summon_end_time = 8; //召唤结束时间
+    required uint64 jetton_show = 9; //显示筹码数
+    optional uint32 bullet_left = 10; //显示子弹价值数（非子弹数量）
+    optional uint32 score = 11; //显示积分价值（非子弹数量）
+    optional uint32 canvas = 12; // 横竖屏标志(0横1竖)
+}
+
+message fish_bonus_info {
+    required uint64 fish_id = 1; // 鱼ID
+    required uint32 bonus = 2; // 获取的奖金 (race积分）
+    required uint32 reward = 3; // 获取的幸运金
+}
+
+message update_chips_resp {
+    required uint64 uid = 1;
+    required int64 chips = 2; // 新增筹码数
+    required uint64 jettonshow = 3; // 子弹倍数,和类型一起确定子弹显示形态
+    required uint64 bulletid = 4; // 子弹id
+}
+
+//子弹发射错误返回
+message shoot_err_resp {
+    required msg_room_code code = 1;
+}
+//切换炮台错误返回
+message battery_err_resp {
+    required msg_room_code code = 1;
+}
+
+message sync_chips_rep {
+}
+message sync_chips_resp {
+    required uint64 chips = 1; // 新增筹码数
+}
+
+message mq_sync_chips_resp {
+    required uint64 chips = 1; // mq发送新增筹码数
+}
+
+// 完成新手提示
+message novice_prompt_req {
+}
+
+
+message bullet_useless_req {
+    required uint64 uid = 1; //用户id
+    required uint32 multi = 2; // 子弹倍数,和类型一起确定子弹显示形态
+    required uint64 bulletid = 3; // 子弹id
+}
+
+message bullet_useless_resp {
+    required uint64 uid = 1; //用户id
+    required uint64 jettonshow = 2; // 子弹倍数,和类型一起确定子弹显示形态 just chips or score
+    required uint64 bulletid = 3; // 子弹id
+    required uint32 multi = 4; // 子弹倍数,和类型一起确定子弹显示形态
+    optional uint32 bulletleft = 5; //子弹剩余
+}
+
+message bullet_pass_resp {
+    required uint64 uid = 1; //用户id
+    required uint64 bulletid = 2; // 子弹id
+    required uint64 jettonshow = 3; // 子弹pass just chips or score
+    required uint32 multi = 4; // 子弹倍数,和类型一起确定子弹显示形态
+    optional uint32 bulletleft = 5; //子弹剩余
+}
+
+message sync_jp_jetton_resp {
+    required uint64 uid = 1; //用户id
+    required uint64 bulletid = 2; // 子弹id
+    required uint64 jettonshow = 3; // 子弹pass
+}
+
+// 3d 捕鱼已经没有用了
+message fish_matrix {
+    required uint32 type = 1; // 鱼的类型
+    required uint64 id = 2; // 鱼的ID
+    required uint32 postion_id = 3; // 鱼的位置ID
+    optional uint32 hp = 4; // 血量
+    optional uint64 owner_id = 5; // 所属玩家ID
+}
+
+// 3d 捕鱼已经没有用了
+message fish_matrix_resp {
+    required uint64 matrixid = 1; // 鱼阵ID
+    required uint32 type = 2; // 鱼阵类型
+    required uint32 path_id = 3; // 鱼阵路线
+    required uint32 speed = 4; //鱼阵速度
+    optional uint64 create_time_ms = 5; // 鱼阵生成时间
+    repeated fish_matrix fish_list = 6; //更新同步鱼
+}
+
+message wave_matrix {
+    required uint32 fish_id = 1;    // 鱼阵的鱼序号ID
+    required uint64 uid = 2;        // 鱼id
+}
+
+message wave_matrix_resp {
+    required uint32 wave_id = 1;            // 鱼阵ID
+    required uint64 create_time_ms = 2;     // 鱼阵生成时间
+    repeated wave_matrix fish_list = 3;     //更新同步鱼
+}
+
+
+message clean_wave_resp {
+}
+
+message summon_fish_req {
+
+}
+
+message summon_err_resp {
+    required msg_room_code code = 1;
+}
+
+message summon_fish_resp {
+    required uint64 uid = 1; //用户id
+    required string nickname = 2; //用户昵称
+    required uint64 summon_end_time = 3; //召唤结束时间
+    required uint64 chips = 4; //当前显示金额
+    required uint64 summon_time = 5; // 召唤时间
+}
+
+//打鱼协议,鱼不死亡
+message one_piece_resp {
+    required uint64 uid = 1; // 谁打中海盗船或者boss鱼
+    repeated fish_bonus_info fish_killed = 2; // 奖金信息
+    required uint64 bulletid = 3; // 子弹id
+    required uint64 jettonshow = 4; // 显示的筹码
+}
+
+message hit_result_resp {
+    required uint64 fish_id = 1; // 鱼ID
+    optional uint32 hp = 2; // 血量
+}
+
+message extra_reward_req {
+
+}
+
+message extra_reward_resp {
+    required uint64 reward = 1; // 额外奖励
+}
+
+message fish_select_save_req{
+    repeated uint32 type = 1; // 鱼的类型
+}
+
+message fish_select_save_resp{
+    required msg_fish_save_code code = 1;
+}
+
+message fish_select_req {
+
+}
+
+message fish_select_resp {
+    repeated uint32 type = 1; // 鱼的类型
+}
+
+message update_valentine_score{
+    required uint32 total_score = 1; //七夕进度条总额
+    required uint32 score = 2; //七夕进度条
+    required bool explode = 3; //开花
+    optional uint64 end_time = 4; // 七夕boss结束时间
+}
+
+// 广播横竖屏切换
+message rotate_canvas_resp {
+    required uint64 uid = 1;    // 用户id
+    required uint32 mark = 2;   // 屏幕方向 0横屏 1竖屏
+}

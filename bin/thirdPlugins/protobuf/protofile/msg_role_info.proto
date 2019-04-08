@@ -1,0 +1,85 @@
+package RoleInfoMsg;
+
+import "msg_common.proto";
+
+// 角色信息相关
+enum c_cmd {
+    lv_info_req = 0;
+    lv_info_resp = 1;
+    lv_config_req = 3;
+    lv_config_resp = 4;
+    lv_notice_resp = 5;
+    // set_nick_req = 6;
+    // set_nick_resp = 7;
+}
+
+service msg_role_info_service {
+    // 等级信息
+    rpc lv_info (lv_info_req) returns (lv_info_resp);
+    // 等级配置
+    rpc lv_configs (lv_config_req) returns (lv_config_resp);
+    // 等级通知
+    rpc lv_notice (undefined) returns (lv_notice_resp);
+    // 设置昵称(暂未开放)
+    // rpc set_nick (set_nick_req) returns (set_nick_resp);
+}
+
+enum info_op_code {
+    success = 0;        // 成功
+    fail = 1;           // 失败
+    out_of_cash = 2;    // 金币不足
+    same_nick = 3;      // 昵称一样
+}
+
+// 等级信息
+message lv_info_req {
+}
+
+message lv_info_resp {
+    required uint32 lv = 1;                 // 当前等级
+    required uint64 exp = 2;                // 当前等级经验值
+    required uint64 need_exp = 3;           // 总经验值
+    required uint32 reward_lv = 4;          // 已领取奖励等级
+    required uint64 next_reward = 5;        // 下一可领取奖励(0表示没有下一奖励)
+    required uint64 total_reward = 6;       // 已领取总奖励
+    required uint32 fund_id = 7;            // 已购买基金id
+    required uint32 next_reward_lv = 8;     // 已领取等级下一可领取等级
+    required uint64 reward = 9;             // 已领取等级下一可领取奖励(0表示没有下一奖励)
+    optional uint64 total_exp = 10;         // 累计总经验值
+    // repeated lv_reward_info history = 11;    // 领奖记录 (请求平台数据)
+}
+
+// 等级配置
+message lv_config_req {
+    required uint32 fund_id = 1;        // 基金id
+}
+
+message lv_config_resp {
+    required uint32 buy_mark = 1;       // 是否已购买(0未购买1当前已购买2旧已购买)
+    required uint64 price = 2;          // 基金价格
+    repeated lv_config configs = 3;     // 等级配置列表
+    optional uint32 fund_id = 4;        // 基金id
+}
+
+message lv_config {
+    required uint32 lv = 1;             // 等级(默认从1开始)
+    required uint64 exp = 2;            // 提升到下一等级需要的总经验
+    required uint64 award = 3;          // 对应基金可领取奖励
+}
+
+// 等级通知(房间通知)
+message lv_notice_resp {
+    required uint32 old_lv = 1;         // 旧等级
+    required uint32 new_lv = 2;         // 提升到新等级
+    required uint64 uid = 3;            // 角色id
+}
+
+// 设置昵称(暂未开放)
+//message set_nick_req {
+//    required string nick = 1;         // 修改的昵称
+//}
+
+//message set_nick_resp {
+//    required info_op_code code = 1;   // 操作结果
+//    required string nick = 2;         // 新昵称
+//}

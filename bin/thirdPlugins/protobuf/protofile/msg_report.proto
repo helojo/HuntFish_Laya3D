@@ -1,0 +1,62 @@
+package ReportMsg;
+
+// 报表
+import "msg_common.proto";
+
+enum c_cmd {
+    detail_report_req = 1;
+    detail_report_resp = 2;
+    screen_report_req = 3; //横竖屏切换请求
+    rotate_canvas_req = 4;
+}
+
+enum screen_code{
+    PC = 1; //PC
+    IOS_WIDTH = 2; // IOS横
+    IOS_HIGHT = 3; // IOS竖
+    AND_WIDTH = 4; // android横
+    AND_HIGHT = 5; // android竖
+    OTR_WIGHT = 6; // 其他横
+    ORT_HIGHT = 7; // 其他竖
+}
+
+service msg_report_service {
+    rpc report_detail (detail_report_req) returns (detail_report_resp); //当前捕鱼报表详情
+    rpc screen_detail (screen_report_req) returns (undefined); //横竖屏
+    rpc rotate_canvas (rotate_canvas_req) returns (undefined); //请求旋转屏幕
+}
+
+message detail_report_info {
+    required uint64 serial_id = 1; //流水号
+    required uint64 fish_id = 2; //鱼id
+    required uint32 bullet_chips = 3; //子弹价值
+    required uint32 room_ante = 4; //场景（房间）倍数
+    required uint32 fish_type = 5; //鱼的类型
+    required uint32 fish_chips = 6; //鱼的价值
+    required bool is_dead = 7; //是否死亡
+    required uint32 fish_price = 8; //幸运金
+    required uint32 time = 9; //射击时间
+}
+
+
+message detail_report_req {
+    required uint32 page = 1; // 页码
+    required uint32 page_num = 2; // 每页条数
+}
+
+message detail_report_resp {
+    required uint64 total_bullet_chips = 1; // 子弹总价
+    required uint64 total_fish_chips = 2; // 鱼死亡总价
+    required uint64 total_fish_price = 3; // 幸运金
+    required uint32 total_page = 4; // 总页数
+    repeated detail_report_info info = 5; // 报表信息
+}
+
+message screen_report_req {
+    required screen_code srceen = 1;
+}
+
+// 横竖屏切换
+message rotate_canvas_req {
+    required uint32 mark = 1;   // 屏幕方向 0横屏 1竖屏
+}

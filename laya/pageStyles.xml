@@ -1,0 +1,9 @@
+<page>
+   <item name="test/TestScene.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="1.scene" props="" ifExport="分离模式" aName="1"/>
+   <item name="2.scene" props="" ifExport="分离模式" aName="22"/>
+   <item name="LoadingPanel.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="test/v1.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="panel/MainPanel.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="panel/LoadingPanel.scene" props="" ifExport="分离模式" aName=""/>
+</page>

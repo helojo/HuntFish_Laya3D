@@ -1,0 +1,17 @@
+package MailMsg;
+
+// 邮件相关
+import "msg_common.proto";
+
+enum c_cmd {
+    mail_resp = 1;
+}
+
+service msg_mail_service {
+    rpc mail (undefined) returns (mail_resp); //邮箱消息返回
+}
+message mail_resp {
+    required string title = 1;
+    required string text = 2;
+    required uint64 chips = 3;
+}

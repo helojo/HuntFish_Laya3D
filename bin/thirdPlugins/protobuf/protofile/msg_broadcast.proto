@@ -1,0 +1,31 @@
+package BroadCastMsg;
+
+import "msg_common.proto";
+
+// 广播相关,获奖消息广播等
+enum c_cmd {
+    bcast_world_resp = 1; //全局广播
+    bcast_room_resp = 2; //房间广播
+    bcast_msg_resp = 3; //广播消息
+}
+
+service msg_broadcast_service {
+    rpc broadcastWorld (undefined) returns (bcast_world_resp);
+    rpc broadcastRoom (undefined) returns (bcast_room_resp);
+    rpc broadcastMsg (undefined) returns (bcast_msg_resp);
+}
+
+// 全局广播消息
+message bcast_world_resp {
+    required string content = 1; // 广播内容
+}
+
+// 房间广播消息
+message bcast_room_resp {
+    required string content = 1; // 广播内容
+}
+
+// 广播消息
+message bcast_msg_resp {
+    required dmsg msg = 1;
+}

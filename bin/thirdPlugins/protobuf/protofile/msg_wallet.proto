@@ -1,0 +1,41 @@
+package WalletMsg;
+
+// 钱包相关
+import "msg_common.proto";
+
+enum c_cmd {
+    main_wallet_req = 0;
+    main_wallet_resp = 1;
+    wallet_req = 2;
+    wallet_resp = 3;
+}
+
+enum msg_wallet_code {
+    SUCCESS = 1;
+    FAIL = 2;
+    FREQUENT = 3; //等待返回期间请求
+    FREQUENTY = 4; // 请求超限
+}
+
+service msg_wallet_service {
+    rpc main_wallet(main_wallet_req) returns (main_wallet_resp);
+    rpc wallet(wallet_req) returns (wallet_resp);
+}
+message main_wallet_req{
+
+}
+
+message main_wallet_resp{
+    required msg_wallet_code code = 1; //主钱包返回
+    optional int64 chips = 2; // 请求筹码数
+    optional int64 auto_wallet = 3; // 自动额度
+}
+
+message wallet_req {
+    required uint64 chips = 1; // 请求筹码数
+    required bool auto = 2;  // 自动
+}
+
+message wallet_resp {
+    required msg_wallet_code code = 1; //请求额度返回
+}

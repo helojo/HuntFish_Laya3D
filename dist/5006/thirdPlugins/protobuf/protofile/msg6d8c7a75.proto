@@ -1,0 +1,20 @@
+package NetCodeMsg;
+
+// cmd 必须是小写
+// 大于20的协议登陆之后才能处理
+enum cmd {
+    msg_base = 0; // 心跳
+    msg_login = 1; // 登陆
+    msg_room = 21; // 房间
+    msg_rank = 22; // 排行榜
+    msg_broadcast = 24; // 广播
+    msg_winners = 25; // 获奖名单
+    msg_pool = 26; // 奖池
+    msg_report = 27; // 报表,横竖屏
+    msg_act = 30; // 活动
+    msg_mail = 31; // 邮件
+    msg_wallet = 32; //钱包
+    msg_role_info = 33; // 角色信息
+    msg_award = 34; // 奖励
+    msg_extend = 38; //扩增玩法（幸运宝箱,狂暴河豚,特殊武器,奖金鱼)
+}

@@ -1,0 +1,27 @@
+package PoolMsg;
+
+//奖池相关
+import "msg_common.proto";
+
+enum c_cmd {
+    bcast_jp_resp = 1;
+    amount_jp_resp = 2;
+}
+service msg_pool_service {
+    rpc broadcast_jp_req (undefined) returns (bcast_jp_resp); //奖信息
+    rpc amount_jp_req (undefined) returns (amount_jp_resp); //奖池数额
+}
+
+// 广播jp奖池信息
+message amount_jp_resp {
+    required uint64 amount = 1; // 广播数额
+}
+
+// jp广播内容
+message bcast_jp_resp {
+    required uint64 uid = 1;
+    required uint64 score = 2;
+    required uint32 score_level = 3;
+    required dmsg content = 4; //空为不广播
+    required uint64 amount = 5; // 广播数额
+}

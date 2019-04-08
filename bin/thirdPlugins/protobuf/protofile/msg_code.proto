@@ -1,0 +1,6 @@
+package CodeMsg;
+
+enum msg_code {
+    CODE_SUCCESS = 1;
+    CODE_FAIL = 2;
+}

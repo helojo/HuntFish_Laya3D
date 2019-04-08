@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "target": "es5",
+    "noEmitHelpers": true,
+    "sourceMap": false,
+    "lib": [
+      "dom",
+      "es5"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "fish_common"
+  ]
+}

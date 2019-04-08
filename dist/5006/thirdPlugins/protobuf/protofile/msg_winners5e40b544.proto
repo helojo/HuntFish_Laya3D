@@ -1,0 +1,26 @@
+package WinnerMsg;
+
+//获奖名单
+enum c_cmd {
+    winners_req = 0;
+    winners_resp = 1;
+}
+
+service msg_winners_service {
+    rpc winners (winners_req) returns (winners_resp);
+}
+
+// 获奖信息
+message winner_info {
+    required string nickname = 1; // 玩家昵称
+    required uint32 date = 2; // 时间戳
+    required uint32 awardLevel = 3; // 奖金等奖
+    required uint64 award = 4; // 奖金
+}
+
+message winners_req {
+}
+
+message winners_resp {
+    repeated winner_info role = 1;
+}
