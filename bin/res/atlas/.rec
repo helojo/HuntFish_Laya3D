@@ -1,0 +1,120 @@
+D .
+D configfile
+R D7514802 fishBaseConfig.json
+R 9701ED37 fishOffsetConfig.json
+R F9534891 fishPathConfig.json
+R 6E5792F3 soundConfig.json
+D fairyguiRes
+D LayaRes
+D sounds
+R 7C75910B FishSound.meta
+R C776573D KeySound.meta
+R 588BF7A0 SceneSound.meta
+D unityRes
+D LayaRes/Font
+P 47A5F600 3djnh_jb.png
+P 52DC570C djbs_0-9.png
+P 5D064E37 jl_0-9.png
+P 9A9BD1C7 yl_0-9.png
+D LayaRes/game
+P 51B558A5 20.png
+P DF95A582 23.png
+P EADAF2EF 25.png
+P 0EE43E30 aim.png
+P C3090E7E auto.png
+P 95B84B65 auto_down.png
+R 648DE9E9 BG01.png
+R 0914B017 BG02.png
+P 6C7D2865 BombFlag.png
+P C9A2AB6D button_gb.png
+P F81DC5AC djbs.png
+P BAF0A7D3 ing_4.png
+P B9584D88 ing_5.png
+P 1B74B2F9 jp_jb.png
+P CD4C184F lock.png
+P C2B281E4 lock_down.png
+P DD1571D3 paotai.png
+P D191D6B5 point.png
+P 8284CCB7 quxiaosuoding.png
+P 114CF127 quxiaozidong.png
+R D150CDD8 rateBgTexture.png
+P 97D5B111 suodinggongji.png
+P FD3B9CA5 wallent.png
+P EAC8AD92 zhuanpan.png
+R EA6ADE88 zhuanpan_guanquan.png
+P 9417394D zidonggongji.png
+D LayaRes/load
+R A6766575 lading_bg 1.png
+D sounds/FishSound
+R 53AA7CBA FishDying1.wav
+R EBA36E2D FishDying1.wav.meta
+R C5868E9A FishDying10.wav
+R FFD71382 FishDying10.wav.meta
+R 3300BC02 FishDying11.wav
+R D1E8F55C FishDying11.wav.meta
+R 0E572E9F FishDying12.wav
+R 3CD26BFE FishDying12.wav.meta
+R F7304D60 FishDying13.wav
+R E551FEE9 FishDying13.wav.meta
+R 1AFD5D7A FishDying14.wav
+R 04AB8527 FishDying14.wav.meta
+R 17C9D3F6 FishDying15.wav
+R 23C25AEC FishDying15.wav.meta
+R F37F47AF FishDying16.wav
+R 6614CE17 FishDying16.wav.meta
+R 51B36B1C FishDying17.wav
+R 329AD959 FishDying17.wav.meta
+R 7406AD1C FishDying18.wav
+R A1EE4038 FishDying18.wav.meta
+R DBB0DFAE FishDying19.wav
+R C74A0AF1 FishDying19.wav.meta
+R 61187F80 FishDying2.wav
+R F23DB3B9 FishDying2.wav.meta
+R 13101FD6 FishDying20.wav
+R AF0CA0D5 FishDying20.wav.meta
+R 03D49B94 FishDying21.wav
+R 624C7985 FishDying21.wav.meta
+R 4838A33F FishDying28.wav
+R 5257F4FE FishDying3.wav
+R 05349ECC FishDying3.wav.meta
+R 4A821D80 FishDying32.wav
+R D0DC828B FishDying4.wav
+R A1990B71 FishDying4.wav.meta
+R 5904AEBB FishDying5.wav
+R 5CF30EA0 FishDying5.wav.meta
+R 64481358 FishDying6.wav
+R B43AD490 FishDying6.wav.meta
+R 230E3CDC FishDying7.wav
+R A9EB7EA4 FishDying7.wav.meta
+R 440C9FE3 FishDying8.wav
+R F6D6279F FishDying8.wav.meta
+R 1AADDBC8 FishDying9.wav
+R 810BBFDA FishDying9.wav.meta
+D sounds/KeySound
+R A7528C3A BigFishCoin.wav
+R 593382A6 BossFishCoin.wav
+R 3F118FD8 BossWarning.wav
+R 6975EDA8 ChangeGun.wav
+R 51E90914 Click.wav
+R 25A52BCF Close.wav
+R 92FD446F Coin.wav
+R 53BBB73F GetCoin.wav
+R 0F3298DD LuckAward.wav
+R 4A668AFC Open.wav
+R 5A5EDC72 RateSelect.wav
+R 54009369 RateWindow.wav
+R 90415691 Shoot.wav
+R 62688D1E Shoot1.wav
+R 38E454E7 Shoot2.wav
+R 198B17FE Shoot3.wav
+R 7BFC0CF9 Turntable.wav
+R 0DB57A71 Warn.wav
+R 574727E1 Wave.wav
+R 189A4CEA WindowChange.wav
+D sounds/SceneSound
+R 913F2825 FishMatrix.mp3
+R 85DCF9E9 HallScene.mp3
+R CC261CB0 LoginScene.mp3
+R 4E5FA2D7 Rate0.1.mp3
+R F209E7B5 Rate1.mp3
+R 19E2CD3E Rate10.mp3
